@@ -10,6 +10,26 @@
 uiStatic_t		uis;
 qboolean		m_entersound;		// after a frame, so caching won't disrupt the sound
 
+#ifdef Q3_VM
+qboolean (*trap_GetValue)( char *value, int valueSize, const char *key );
+void (*trap_R_AddRefEntityToScene2)( const refEntity_t *re );
+int (*trap_GetAsyncFiles)( const char **files, int max );
+#else
+int dll_com_trapGetValue;
+int dll_trap_R_AddRefEntityToScene2;
+int dll_trap_GetAsyncFiles;
+#endif
+
+#if defined(MISSIONPACK)
+extern qboolean intShaderTime;
+extern qboolean linearLight;
+extern qboolean getAsyncFiles;
+#else
+qboolean intShaderTime = qfalse;
+qboolean linearLight = qfalse;
+qboolean getAsyncFiles = qfalse;
+#endif
+
 #ifndef BUILD_GAME_STATIC
 // these are here so the functions in q_shared.c can link
 
@@ -1085,6 +1105,40 @@ UI_Init
 =================
 */
 void UI_Init( void ) {
+	char  value[MAX_CVAR_VALUE_STRING];
+
+	trap_Cvar_VariableStringBuffer( "//trap_GetValue", value, sizeof( value ) );
+	if ( value[0] ) {
+#ifdef Q3_VM
+		trap_GetValue = (void*)~atoi( value );
+		Com_Printf("extensions supported: %i\n", trap_GetValue);
+		if ( trap_GetValue( value, sizeof( value ), "trap_R_AddRefEntityToScene2" ) ) {
+			trap_R_AddRefEntityToScene2 = (void*)~atoi( value );
+			intShaderTime = qtrue;
+		}
+		if ( trap_GetValue( value, sizeof( value ), "trap_GetAsyncFiles" ) ) {
+			trap_GetAsyncFiles = (void*)~atoi( value );
+			getAsyncFiles = qtrue;
+		} else {
+			getAsyncFiles = qfalse;
+		}
+#else
+		dll_com_trapGetValue = atoi( value );
+		if ( trap_GetValue( value, sizeof( value ), "trap_R_AddRefEntityToScene2" ) ) {
+			dll_trap_R_AddRefEntityToScene2 = atoi( value );
+			intShaderTime = qtrue;
+		}
+
+		if ( trap_GetValue( value, sizeof( value ), "trap_GetAsyncFiles" ) ) {
+			dll_trap_GetAsyncFiles = atoi( value );
+			getAsyncFiles = qtrue;
+		} else {
+			getAsyncFiles = qfalse;
+		}
+
+#endif
+	}
+
 	UI_RegisterCvars();
 
 	UI_InitGameinfo();
@@ -1214,6 +1268,11 @@ UI_Refresh
 */
 void UI_Refresh( int realtime )
 {
+#ifndef MISSIONPACK
+	int count;
+	const char *files[16];
+#endif
+
 	uis.frametime = realtime - uis.realtime;
 	uis.realtime  = realtime;
 
@@ -1225,6 +1284,19 @@ void UI_Refresh( int realtime )
 
 	UI_VideoCheck( realtime );
 	
+#ifndef MISSIONPACK
+	if(getAsyncFiles) {
+		if((count = trap_GetAsyncFiles(files, 16)) && !uis.registerModels) {
+			uis.registerModels = realtime + 1000;
+		}
+
+		if(uis.registerModels != 0 && realtime > uis.registerModels) {
+			MainMenu_Cache();
+			uis.registerModels = 0;
+		}
+	}
+#endif
+
 	if ( uis.activemenu )
 	{
 		if (uis.activemenu->fullscreen)

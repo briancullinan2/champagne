@@ -704,6 +704,7 @@ typedef struct {
 	int				followClient;
 
 	qboolean		skipDFshaders;
+	qboolean    getAsyncFiles;
 } cg_t;
 
 
@@ -1164,6 +1165,9 @@ typedef struct {
 
 	float			cursorX;
 	float			cursorY;
+
+
+	int       registerModels;
 } cgs_t;
 
 //==============================================================================
@@ -1704,10 +1708,13 @@ extern  qboolean linearLight;
 #ifdef Q3_VM
 extern void (*trap_R_AddRefEntityToScene2)( const refEntity_t *re );
 extern void	(*trap_R_AddLinearLightToScene)( const vec3_t start, const vec3_t end, float intensity, float r, float g, float b );
+extern int	(*trap_GetAsyncFiles)( const char **files, int max );
 #else
 qboolean trap_GetValue( char *value, int valueSize, const char *key );
 void trap_R_AddRefEntityToScene2( const refEntity_t *re );
 void trap_R_AddLinearLightToScene( const vec3_t start, const vec3_t end, float intensity, float r, float g, float b );
+int	trap_GetAsyncFiles( const char **files, int max );
+extern int dll_trap_GetAsyncFiles;
 extern int dll_com_trapGetValue;
 extern int dll_trap_R_AddRefEntityToScene2;
 extern int dll_trap_R_AddLinearLightToScene;

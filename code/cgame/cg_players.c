@@ -1574,11 +1574,17 @@ void CG_PlayerAnimation( centity_t *cent, int *legsOld, int *legs, float *legsBa
 	*legs = cent->pe.legs.frame;
 	*legsBackLerp = cent->pe.legs.backlerp;
 
+#ifdef USE_ADVANCED_CLASS
+	if(!ci->notq3) {
+#endif
 	CG_RunLerpFrame( ci->animations, &cent->pe.torso, cent->currentState.torsoAnim, speedScale );
 
 	*torsoOld = cent->pe.torso.oldFrame;
 	*torso = cent->pe.torso.frame;
 	*torsoBackLerp = cent->pe.torso.backlerp;
+#ifdef USE_ADVANCED_CLASS
+	}
+#endif
 }
 
 /*
@@ -2673,7 +2679,15 @@ void CG_Player( centity_t *cent ) {
 
 	VectorCopy( cent->lerpOrigin, torso.lightingOrigin );
 
+#ifdef USE_ADVANCED_CLASS
+	if(!ci->notq3) {
+#endif
+
 	CG_PositionRotatedEntityOnTag( &torso, &legs, ci->legsModel, "tag_torso");
+
+#ifdef USE_ADVANCED_CLASS
+	}
+#endif
 
 	torso.shadowPlane = shadowPlane;
 	torso.renderfx = renderfx;
@@ -2690,7 +2704,15 @@ void CG_Player( centity_t *cent ) {
 	}
 	torso.shaderRGBA[3] = 255;
 
+#ifdef USE_ADVANCED_CLASS
+	if(!ci->notq3) {
+#endif
+
 	CG_AddRefEntityWithPowerups( &torso, &cent->currentState, ci->team );
+
+#ifdef USE_ADVANCED_CLASS
+	}
+#endif
 
 #ifdef MISSIONPACK
 	if ( cent->currentState.eFlags & EF_KAMIKAZE ) {
@@ -2907,6 +2929,10 @@ void CG_Player( centity_t *cent ) {
 
 	VectorCopy( cent->lerpOrigin, head.lightingOrigin );
 
+
+#ifdef USE_ADVANCED_CLASS
+	if(!ci->notq3)
+#endif
 	CG_PositionRotatedEntityOnTag( &head, &torso, ci->torsoModel, "tag_head");
 
 	head.shadowPlane = shadowPlane;
@@ -2939,9 +2965,17 @@ void CG_Player( centity_t *cent ) {
 	//
 	// add the gun / barrel / flash
 	//
+#ifdef USE_ADVANCED_CLASS
+	if(!ci->notq3)
+#endif
 	CG_AddPlayerWeapon( &torso, NULL, cent, ci->team );
 
 	// add powerups floating behind the player
+#ifdef USE_ADVANCED_CLASS
+	if(ci->notq3)
+	CG_PlayerPowerups( cent, &legs );
+	else
+#endif
 	CG_PlayerPowerups( cent, &torso );
 }
 

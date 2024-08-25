@@ -430,12 +430,17 @@ static void UI_PlayerAnimation( playerInfo_t *pi, int *legsOld, int *legs, float
 		pi->torsoAnimationTimer = 0;
 	}
 
+
+	if(!pi->notq3) {
+
 	UI_TorsoSequencing( pi );
 
 	UI_RunLerpFrame( pi, &pi->torso, pi->torsoAnim );
 	*torsoOld = pi->torso.oldFrame;
 	*torso = pi->torso.frame;
 	*torsoBackLerp = pi->torso.backlerp;
+
+	}
 }
 
 
@@ -778,6 +783,8 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 
 	torso.renderfx = renderfx;
 
+
+	if(!pi->notq3)
 	trap_R_AddRefEntityToScene( &torso );
 
 	//
@@ -797,11 +804,13 @@ void UI_DrawPlayer( float x, float y, float w, float h, playerInfo_t *pi, int ti
 
 	head.renderfx = renderfx;
 
+	if(!pi->notq3)
 	trap_R_AddRefEntityToScene( &head );
 
 	//
 	// add the gun
 	//
+	if(!pi->notq3)
 	if ( pi->currentWeapon != WP_NONE ) {
 		memset( &gun, 0, sizeof(gun) );
 		gun.hModel = pi->weaponModel;
@@ -910,7 +919,7 @@ static qboolean UI_RegisterClientSkin( playerInfo_t *pi, const char *modelName, 
 UI_ParseAnimationFile
 ======================
 */
-static qboolean UI_ParseAnimationFile( const char *filename, animation_t *animations ) {
+static qboolean UI_ParseAnimationFile( const char *filename, animation_t *animations, qboolean *notq3 ) {
 	char		*text_p, *prev;
 	int			len;
 	int			i;
@@ -919,7 +928,7 @@ static qboolean UI_ParseAnimationFile( const char *filename, animation_t *animat
 	int			skip;
 	char		text[20000];
 	fileHandle_t	f;
-	qboolean notq3 = qfalse;
+	*notq3 = qfalse;
 
 	memset( animations, 0, sizeof( animation_t ) * MAX_ANIMATIONS );
 
@@ -972,7 +981,7 @@ static qboolean UI_ParseAnimationFile( const char *filename, animation_t *animat
 			}
 			continue;
 		} else if ( !Q_stricmp( token, "notq3" ) ) {
-			notq3 = qtrue;
+			*notq3 = qtrue;
 			continue;
 		}
 
@@ -1004,7 +1013,7 @@ static qboolean UI_ParseAnimationFile( const char *filename, animation_t *animat
 		}
 		animations[i].firstFrame = atoi( token );
 
-		if(!notq3) {
+		if(!(*notq3)) {
 		// leg only frames are adjusted to not count the upper body only frames
 		if ( i == LEGS_WALKCR ) {
 			skip = animations[LEGS_WALKCR].firstFrame - animations[TORSO_GESTURE].firstFrame;
@@ -1110,7 +1119,7 @@ qboolean UI_RegisterClientModelname( playerInfo_t *pi, const char *modelSkinName
 
 	// load the animations
 	Com_sprintf( filename, sizeof( filename ), "models/players/%s/animation.cfg", modelName );
-	if ( !UI_ParseAnimationFile( filename, pi->animations ) ) {
+	if ( !UI_ParseAnimationFile( filename, pi->animations, &pi->notq3 ) ) {
 		Com_Printf( "Failed to load animation file %s\n", filename );
 		return qfalse;
 	}

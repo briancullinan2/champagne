@@ -570,6 +570,7 @@ static void PlayerModel_MenuInit( void )
 	int playerClass;
 	trap_Cvar_VariableStringBuffer( "model", s_playermodel.modelskin, 64 );
 	playerClass = BG_PlayerClassFromModel(s_playermodel.modelskin);
+	Com_Printf("model: %s, class: %i\n", s_playermodel.modelskin, playerClass);
 	if(playerClass >= PCLASS_HUMAN && playerClass <= PCLASS_HUMAN_COUNT) {
 		selectedClass = 1;
 	} else {
@@ -800,6 +801,8 @@ void PlayerModel_Cache( void )
 	for( i = 0; i < s_playermodel.nummodels; i++ ) {
 		trap_R_RegisterShaderNoMip( s_playermodel.modelnames[i] );
 	}
+
+	PlayerModel_UpdateModel();
 }
 
 void UI_PlayerModelMenu(void)
