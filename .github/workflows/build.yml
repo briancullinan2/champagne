@@ -66,8 +66,8 @@ jobs:
         make release -j 8 ARCH=${{ matrix.arch }} CC=${{ matrix.cc }} \
           PLATFORM=mingw32
         cd ../../
-        mv build/linux/build/release-mingw32-*/multigame/*.dll bin/
-        #mv build/linux/build/release-mingw32-*/multigame/*.pdb bin/
+        mv build/linux/build/release-mingw32-*/champagne/*.dll bin/
+        #mv build/linux/build/release-mingw32-*/champagne/*.pdb bin/
 
     - uses: actions/upload-artifact@v4
       if: matrix.cc == 'gcc' && matrix.config == 'Release'
@@ -146,11 +146,11 @@ jobs:
           - arch: x86
             use_sdl: USE_SDL=0
             platform: linux
-            copy_target: /build/release-*/multigame/*.so
+            copy_target: /build/release-*/champagne/*.so
           - arch: x86_64
             use_sdl: USE_SDL=1
             platform: linux
-            copy_target: /build/release-*/multigame/*.so
+            copy_target: /build/release-*/champagne/*.so
           - arch: bytecode
             platform: qvms
             copy_target: /*.pk3
@@ -230,7 +230,7 @@ jobs:
           cd build/linux
           make release -j 4 ARCH=${{ matrix.arch }} CC=${{ matrix.cc }}
           cd ../../
-          mv build/linux/build/release-linux-arm64/multigame/*.so bin/
+          mv build/linux/build/release-linux-arm64/champagne/*.so bin/
 
     - uses: actions/upload-artifact@v4
       if: false
@@ -268,7 +268,7 @@ jobs:
         make release -j 4 CC=${{ matrix.cc }} ARCH=${{ matrix.arch }} INSTALL=ginstall 
         cd ../../
         mkdir bin
-        mv ./build/linux/build/release-darwin-${{ matrix.arch }}/multigame/*.dylib ./bin/
+        mv ./build/linux/build/release-darwin-${{ matrix.arch }}/champagne/*.dylib ./bin/
 
     - uses: actions/upload-artifact@v4
       if: matrix.cc == 'clang' && matrix.config == 'Release'
@@ -288,14 +288,14 @@ jobs:
 
       - name: Create binary archives
         run: |
-          7z a -r multigame-full.zip         ./macos-x86_64/*
-          7z a -r multigame-full.zip         ./macos-aarch64/*
-          7z a -r multigame-full.zip         ./linux-x86_64/*
-          7z a -r multigame-full.zip         ./windows-mingw-x86_64/*
-          7z a -r multigame-full.zip         ./windows-msvc-x86_64/*
-          7z a -r multigame-full.zip         ./windows-msvc-arm64/*
-          7z a -r multigame-full.zip         ./qvms-bytecode/*
-          cp   ./qvms-bytecode/*.pk3         ./xxx-multigame.pk3
+          7z a -r champagne-full.zip         ./macos-x86_64/*
+          7z a -r champagne-full.zip         ./macos-aarch64/*
+          7z a -r champagne-full.zip         ./linux-x86_64/*
+          7z a -r champagne-full.zip         ./windows-mingw-x86_64/*
+          7z a -r champagne-full.zip         ./windows-msvc-x86_64/*
+          7z a -r champagne-full.zip         ./windows-msvc-arm64/*
+          7z a -r champagne-full.zip         ./qvms-bytecode/*
+          cp   ./qvms-bytecode/*.pk3         ./xxx-champagne.pk3
 
       - name: Create latest build
         uses: czietz/action-automatic-releases@latest

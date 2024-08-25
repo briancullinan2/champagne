@@ -25,7 +25,7 @@ endif
 -include Makefile.local
 
 ifndef MOD
-MOD=multigame
+MOD=champagne
 endif
 
 ifeq ($(COMPILE_PLATFORM),cygwin)
@@ -228,7 +228,7 @@ TARGET_QVMS = \
   $(B)/$(MOD)/vm/qagame.qvm \
   $(B)/$(MOD)/vm/ui.qvm
 
-TARGETS += $(TARGET_QVMS) xxx-multigame.pk3
+TARGETS += $(TARGET_QVMS) xxx-$(MOD).pk3
 else
 TARGETS += \
   $(B)/$(MOD)/cgame$(SHLIBNAME) \
@@ -602,14 +602,14 @@ distclean: clean
 	@rm -rf $(BUILD_DIR)
 
 
-xxx-multigame.pk3: $(TARGET_QVMS)
+xxx-$(MOD).pk3: $(TARGET_QVMS)
 	$(echo_cmd) "ZIPPING $<"
 	$(Q)cd $(B)/$(MOD) && \
-		$(ZIP) ../../../xxx-multigame.pk3 vm/*.qvm && \
-		$(ZIP) -u ../../../xxx-multigame.pk3 vm/*.map && \
-		$(ZIP) -u ../../../xxx-multigame.pk3 vm/*.jts
-	$(Q)cd ../../multigame/pak0.pk3dir && \
-		$(ZIP) -u ../build/linux/xxx-multigame.pk3 ./*
+		$(ZIP) ../../../xxx-$(MOD).pk3 vm/*.qvm && \
+		$(ZIP) -u ../../../xxx-$(MOD).pk3 vm/*.map && \
+		$(ZIP) -u ../../../xxx-$(MOD).pk3 vm/*.jts
+	$(Q)cd ../../$(MOD)/pak0.pk3dir && \
+		$(ZIP) -u ../build/linux/xxx-$(MOD).pk3 ./*
 
 
 #############################################################################

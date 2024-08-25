@@ -4,7 +4,7 @@ const path = require('path')
 const {glob} = require('glob')
 const {spawnSync} = require('child_process')
 
-const MODNAME = 'multigame'
+const MODNAME = 'champagne'
 const DEFAULT_MODEL = 'sarge'
 const SOURCE_PATH = path.resolve(__dirname)
 const OUTPUT_PATH = path.resolve(path.join(__dirname, 'maps'))

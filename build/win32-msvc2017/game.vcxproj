@@ -260,7 +260,6 @@
     <ClCompile Include="..\..\code\game\bg_lib.c" />
     <ClCompile Include="..\..\code\game\bg_misc.c" />
     <ClCompile Include="..\..\code\game\bg_pmove.c" />
-    <ClCompile Include="..\..\code\game\bg_pmove_ball.c" />
     <ClCompile Include="..\..\code\game\bg_slidemove.c" />
     <ClCompile Include="..\..\code\game\g_active.c" />
     <ClCompile Include="..\..\code\game\g_arenas.c" />
@@ -284,11 +283,7 @@
     <ClCompile Include="..\..\code\game\g_trigger.c" />
     <ClCompile Include="..\..\code\game\g_unlagged.c" />
     <ClCompile Include="..\..\code\game\g_utils.c" />
-    <ClCompile Include="..\..\code\game\g_powerup.c" />
-    <ClCompile Include="..\..\code\game\g_portal.c" />
     <ClCompile Include="..\..\code\game\g_weapon.c" />
-    <ClCompile Include="..\..\code\game\g_weapon2.c" />
-    <ClCompile Include="..\..\code\game\g_telefrag.c" />
     <ClCompile Include="..\..\code\game\q_math.c" />
     <ClCompile Include="..\..\code\game\q_shared.c" />
   </ItemGroup>
