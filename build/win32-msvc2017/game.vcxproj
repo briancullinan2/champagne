@@ -262,6 +262,7 @@
     <ClCompile Include="..\..\code\game\bg_pmove.c" />
     <ClCompile Include="..\..\code\game\bg_slidemove.c" />
     <ClCompile Include="..\..\code\game\g_active.c" />
+    <ClCompile Include="..\..\code\game\g_classes.c" />
     <ClCompile Include="..\..\code\game\g_arenas.c" />
     <ClCompile Include="..\..\code\game\g_bot.c" />
     <ClCompile Include="..\..\code\game\g_client.c" />

@@ -363,6 +363,7 @@ static void PlayerModel_DrawPlayer( void *self )
 
 #define ID_PLAYERCLASS			126
 
+static void PlayerModel_SetMenuItems( void );
 static void PlayerModel_BuildList( void );
 static int selectedClass = 0;
 
