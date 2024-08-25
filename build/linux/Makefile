@@ -609,7 +609,7 @@ xxx-$(MOD).pk3: $(TARGET_QVMS)
 		$(ZIP) -u ../../../xxx-$(MOD).pk3 vm/*.map && \
 		$(ZIP) -u ../../../xxx-$(MOD).pk3 vm/*.jts
 	$(Q)cd ../../$(MOD)/pak0.pk3dir && \
-		$(ZIP) -u ../build/linux/xxx-$(MOD).pk3 ./*
+		$(ZIP) -u ../../build/linux/xxx-$(MOD).pk3 ./*
 
 
 #############################################################################
