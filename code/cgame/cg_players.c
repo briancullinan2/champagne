@@ -801,6 +801,14 @@ void CG_LoadClientInfo( clientInfo_t *ci ) {
 			CG_Error( "CG_RegisterClientModelname( %s, %s, %s, %s %s ) failed", ci->modelName, ci->skinName, ci->headModelName, ci->headSkinName, teamname );
 		}
 
+		ci->isDefault = qtrue;
+
+		if(ci->playerClass >= PCLASS_MONSTER && ci->playerClass <= PCLASS_MONSTER_COUNT) {
+			if ( !CG_RegisterClientModelname( ci, DEFAULT_MONSTER, ci->skinName, DEFAULT_MONSTER, ci->skinName, teamname ) ) {
+				CG_Error( "DEFAULT_TEAM_MONSTER / skin (%s/%s) failed to register", DEFAULT_MONSTER, ci->skinName );
+			}
+		} else
+
 		// fall back to default team name
 		if( cgs.gametype >= GT_TEAM) {
 			// keep skin name
@@ -818,6 +826,8 @@ void CG_LoadClientInfo( clientInfo_t *ci ) {
 			}
 		}
 		modelloaded = qfalse;
+	} else {
+		ci->isDefault = qfalse;
 	}
 
 	ci->newAnims = qfalse;

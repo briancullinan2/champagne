@@ -646,6 +646,9 @@ void CG_ReregisterModels( void ) {
 		if ( !match->infoValid ) {
 			continue;
 		}
+		if(!match->isDefault) {
+			continue;
+		}
 		// just load the real info cause it uses the same models and skins
 		CG_LoadClientInfo( match );
 	}

@@ -6,6 +6,7 @@ const {spawnSync} = require('child_process')
 
 const MODNAME = 'champagne'
 const DEFAULT_MODEL = 'sarge'
+const DEFAULT_MONSTER = 'shambler'
 const SOURCE_PATH = path.resolve(__dirname)
 const OUTPUT_PATH = path.resolve(path.join(__dirname, 'maps'))
 
@@ -28,7 +29,7 @@ const SUPPORTED_FORMATS = [
 ]
 
 // include icons because menu uses it to load, not a lazy check unforntunatly
-const FILE_TYPES = new RegExp('menu\/|fonts\/|gfx\/2d\/|players\/[^\/]*?\/icon.*\.tga|players\/' + DEFAULT_MODEL + '\/|_tracemap\.tga', 'ig')
+const FILE_TYPES = new RegExp('menu\/|fonts\/|gfx\/2d\/|players\/[^\/]*?\/icon.*\.tga|players\/' + DEFAULT_MODEL + '\/|players\/' + DEFAULT_MONSTER + '\/|_tracemap\.tga', 'ig')
 
 let lockFunc = false
 let lockPromise

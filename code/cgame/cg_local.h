@@ -67,6 +67,8 @@
 #define TEAM_OVERLAY_MAXLOCATION_WIDTH	16
 
 #define	DEFAULT_MODEL			"sarge"
+#define DEFAULT_MONSTER   "shambler"
+
 #ifdef MISSIONPACK
 #define	DEFAULT_TEAM_MODEL		"james"
 #define	DEFAULT_TEAM_HEAD		"*james"
@@ -403,6 +405,8 @@ typedef struct {
 	qboolean notq3;
 	pclass_t playerClass;
 #endif
+
+	qboolean isDefault;
 
 } clientInfo_t;
 
