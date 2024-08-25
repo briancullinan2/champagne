@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const GAME_DIRECTORY = 'demoq3'
+const GAME_DIRECTORY = 'champagne'
 const WEB_DIRECTORY = path.resolve(__dirname + '/..')
 const ASSETS_DIRECTORY = path.resolve(__dirname + '/../' + GAME_DIRECTORY + '/pak0.pk3dir/')
 const BUILD_DIRECTORY = path.resolve(__dirname + '/../build/')
