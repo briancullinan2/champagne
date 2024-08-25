@@ -13,7 +13,7 @@ dirs:
 .PHONY: all dirs
 
 $(PK3): vm/qagame.qvm vm/cgame.qvm vm/ui.qvm
-	$(7Z) $@ vm/*.qvm vm/*.jts ../../assets/*
+	$(7Z) $@ vm/*.qvm vm/*.jts ../../multigame/pak0.pk3dir/*
 
 cc = cd vm/$1 && $(Q3LCC) $2 -o $(notdir $@).tmp ../../$< && mv $(notdir $@).tmp $(notdir $@)
 qa_cc = $(call cc,game,$(QA_CFLAGS))

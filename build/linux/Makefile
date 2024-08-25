@@ -608,7 +608,7 @@ xxx-multigame.pk3: $(TARGET_QVMS)
 		$(ZIP) ../../../xxx-multigame.pk3 vm/*.qvm && \
 		$(ZIP) -u ../../../xxx-multigame.pk3 vm/*.map && \
 		$(ZIP) -u ../../../xxx-multigame.pk3 vm/*.jts
-	$(Q)cd ../../assets && \
+	$(Q)cd ../../multigame/pak0.pk3dir && \
 		$(ZIP) -u ../build/linux/xxx-multigame.pk3 ./*
 
 

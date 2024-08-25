@@ -292,7 +292,7 @@ copy vm\cgame\cgame.jts vm
 %tooldir%7za.exe a -tzip -mx=9 -mpass=8 -mfb=255 -- %pk3% vm\*.*
 rem rmdir /S /Q vm
 
-cd ..\..\assets
+cd ..\..\multigame\pak0.pk3dir
 @if errorlevel 1 goto quit
 %tooldir%7za.exe a -tzip -mx=9 -mpass=8 -mfb=255 -r -- %pk3% *.*
 
