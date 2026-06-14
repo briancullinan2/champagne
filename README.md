@@ -13,7 +13,7 @@ Unofficial Quake III Arena gamecode patch & Champagne Campaign Mod
 * **Security & Float Validation:** Restructured data integrity routines to support upstream security patches and uniform `floatfix` processing across system bounds.
 * **Developer Log Output:** Integrated developer console routing flags (`cg_developer`) into local printing routines for clean debugging.
 
-## Gameplay & Modding Mechanics (Champagne Campaign)
+## Gameplay & Modding Mechanics
 * **Persistent Camera States:** Converted the core third-person view flags (`cg_thirdPerson`, `cg_thirdPersonRange`, and `cg_thirdPersonAngle`) to fully archived `CVAR_ARCHIVE` variables so they save across sessions.
 * **Campaign Target View Constraints:** Added dedicated third-person tracking variables (`cg_thirdMonster`, `cg_thirdMonsterRange`, `cg_thirdMonsterAngle`) inside `USE_CAMPAIGN` conditional routines.
 * **Advanced Player Classes:** Integrated a customizable framework for distinct character models (`USE_ADVANCED_CLASS`) with automated fallbacks to monster archetypes like `shambler`.
