@@ -1,26 +1,41 @@
-# baseq3a
+# Chapagne Campaign
 
-Unofficial Quake III Arena gamecode patch
+Unofficial Quake III Arena gamecode patch & Champagne Campaign Mod
+
 
 # What is done:
 
- * new toolchain used (optimized q3lcc and q3asm)
- * upstream security fixes
- * floatfix
- * fixed vote system
- * fixed spawn system
- * fixed in-game crosshair proportions
- * fixed UI mouse sensitivity for high-resolution
- * fixed server browser + faster scanning
- * new demo UI (subfolders,filtering,sorting)
- * updated serverinfo UI
- * map rotation system
- * unlagged weapons
- * improved prediction
- * damage-based hitsounds
- * colored skins
- * high-quality proportional font renderer
- * single-line cvar declaration, improved cvar code readability and development efficiency
+## Core Engine & Architecture Fixes
+* **Static Game Code Architecture:** Full architectural support for compilation under a single static engine wrapper via `BUILD_GAME_STATIC` macros (overriding standard VM `dllEntry` / `vmMain` entry points).
+* **Asynchronous Asset Pipeline:** Implemented asynchronous file listing lookups through `trap_GetAsyncFiles` to improve loading efficiency.
+* **Null Model Handling:** Added safety checks to the renderer (`CG_General`) to prevent missing map objects or model handles from throwing unhandled memory exceptions and crashing matches.
+* **New Toolchain Support:** Optimized support for compiling and building binaries using custom `q3lcc` and `q3asm` components.
+* **Security & Float Validation:** Restructured data integrity routines to support upstream security patches and uniform `floatfix` processing across system bounds.
+* **Developer Log Output:** Integrated developer console routing flags (`cg_developer`) into local printing routines for clean debugging.
+
+## Gameplay & Modding Mechanics (Champagne Campaign)
+* **Persistent Camera States:** Converted the core third-person view flags (`cg_thirdPerson`, `cg_thirdPersonRange`, and `cg_thirdPersonAngle`) to fully archived `CVAR_ARCHIVE` variables so they save across sessions.
+* **Campaign Target View Constraints:** Added dedicated third-person tracking variables (`cg_thirdMonster`, `cg_thirdMonsterRange`, `cg_thirdMonsterAngle`) inside `USE_CAMPAIGN` conditional routines.
+* **Advanced Player Classes:** Integrated a customizable framework for distinct character models (`USE_ADVANCED_CLASS`) with automated fallbacks to monster archetypes like `shambler`.
+* **Specialized SFX Teleportation Pairs:** Added targeted multi-layered teleport routines (`teleInSound2` / `teleOutSound2`) mapped directly to alternative monster entities.
+* **Extended Game Object Layer:** Built underlying scaffolding for custom items (`USE_ADVANCED_ITEMS`), runes (`USE_RUNES`), cloak blink counters, and specific model attachment offsets.
+* Unlagged weapons system.
+* Improved local player movement prediction loops.
+* Dynamic damage-based hitsounds.
+
+## UI, Teams, & Visual Assets
+* **Proportional Font Separation:** Isolated string font rendering hooks into modular definitions (`UI_DrawProportionalString_real`), allowing alternative proportional character sets to be passed explicitly.
+* **Extended Team Objectives:** Expanded game mode assets with dedicated visual definitions and base trackers for secondary team parameters—introducing support for unique green and gold flag assets.
+* **Dynamic Asset Registration:** Implemented comprehensive lookup and registration steps (`CG_ReregisterModels`) to prevent mismatched player graphics from breaking active UI contexts.
+* **Icon Name Formatting:** Cleaned up client-side loading string concatenations by truncating legacy file extension formats on custom player asset path shaders.
+* Fixed crosshair aspect ratios, scaling issues, and layout anomalies at widescreen configurations.
+* Fixed mouse capture speed and relative bounds calculations for high-DPI screens.
+* New sorted demo management layout structure featuring automated subfolder groupings.
+* Map rotation matrices, fixed team voter tracking systems, and player spawn points.
+* High-speed server browsing queries and automated ping scanning layouts.
+
+
+
 
 # TODO:
 
